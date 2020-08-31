@@ -1,0 +1,5 @@
+//TODO: removed this from firebase.json because it failed during githib actions deploy. Investigate how to use it correctly.
+
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ],
