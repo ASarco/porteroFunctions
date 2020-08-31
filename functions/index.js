@@ -5,8 +5,10 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-// Take the text parameter passed to this HTTP endpoint and insert it into
-// Cloud Firestore under the path /messages/:documentId/original
+//Copy a portero document under other id in the same Firestore DB
+//Query params:
+// source: the source document id
+// dest: the new document id
 exports.movePortero = functions.https.onRequest(async (req, res) => {
     // Grab the text parameter.
     const docIdSource = req.query.source;
@@ -17,6 +19,6 @@ exports.movePortero = functions.https.onRequest(async (req, res) => {
     let doc = await snapshot.get();
 
     const writeResult = await admin.firestore().collection('portero').doc(docIdDest).set(doc.data());
-    // Send back a message that we've succesfully written the message
+    // Send back a message that we've successfully copied the doc
     res.json({result: `Document with ID: ${writeResult} added.`});
 });
